@@ -1,15 +1,65 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <script src="./script.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <title>El Pollo Loco</title>
+    <link rel="icon" type="image/png" href="./assets/img/favicon.png">
     <link rel="stylesheet" href="./style/standard.css">
+    <link rel="stylesheet" href="./style/assets.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <script src="./script.js" defer></script>
 </head>
-<body>
-    <h1>Text</h1>
+
+<body onload="init()">
+    <main class="page">
+        <h1 class="page-title">El Pollo Loco</h1>
+
+        <section id="gameContainer" class="game-container">
+            <canvas id="canvas" width="720" height="480"></canvas>
+
+            <div id="startScreen" class="overlay start-screen">
+                <div class="menu menu-row">
+                    <button id="startButton" class="btn btn-primary">Spiel starten</button>
+                    <button id="controlsButton" class="btn">Steuerung</button>
+                </div>
+                <a class="imprint-link" href="./impressum.html">Impressum</a>
+            </div>
+        </section>
+    </main>
+
+    <dialog id="controlsDialog" class="dialog">
+        <div class="dialog-content">
+            <button id="closeDialogButton" class="dialog-close" aria-label="Schließen">
+                <img src="./assets/img/icons/close.svg" alt="">
+            </button>
+            <h2>So wird gespielt</h2>
+            <p>
+                Hilf Pepe, sich durch die Wüste zu kämpfen! Sammle Münzen und Salsaflaschen,
+                springe den Hühnern auf den Kopf und besiege am Ende die riesige Henne mit deinen Flaschen.
+            </p>
+            <table class="controls-table">
+                <tr>
+                    <td><span class="key">&larr;</span> <span class="key">&rarr;</span></td>
+                    <td>Laufen</td>
+                </tr>
+                <tr>
+                    <td><span class="key">Leertaste</span> / <span class="key">&uarr;</span></td>
+                    <td>Springen</td>
+                </tr>
+                <tr>
+                    <td><span class="key">D</span></td>
+                    <td>Flasche werfen</td>
+                </tr>
+            </table>
+            <p class="dialog-hint">
+                Auf Handy und Tablet steuerst du Pepe über die Buttons im Spiel.
+                Hühner besiegst du nur, wenn du von oben auf sie springst.
+            </p>
+        </div>
+    </dialog>
 </body>
+
 </html>

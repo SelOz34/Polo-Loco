@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Boogaloo';
+    src: url('../assets/fonts/Boogaloo-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --color-primary: #ffb000;
+    --color-primary-dark: #c96a00;
+    --color-accent: #a3290b;
+    --color-text: #fff8e7;
+    --color-dark: #2b1407;
+    --color-overlay: rgba(43, 20, 7, 0.78);
+    --font-main: 'Boogaloo', 'Trebuchet MS', sans-serif;
+}
