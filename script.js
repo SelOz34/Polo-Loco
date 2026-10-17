@@ -1,18 +1,66 @@
+let canvas;
+let world = null;
+let keyboard = new Keyboard();
+let intervalIds = [];
+
+
 /**
- * Initializes the page: connects all buttons and the dialog with their functions.
+ * Initializes the page: connects keyboard, buttons and the dialog with their functions.
  */
 function init() {
+    canvas = document.getElementById('canvas');
+    bindKeyboardEvents();
     bindButtons();
     bindDialogEvents();
 }
 
 
 /**
- * Starts the game.
- * For now it only hides the start screen – the game itself follows in stage 3.
+ * Starts an interval and remembers its id, so it can be stopped later.
+ * @param {Function} callback - Function to run.
+ * @param {number} time - Interval time in milliseconds.
+ */
+function setStoppableInterval(callback, time) {
+    const id = setInterval(callback, time);
+    intervalIds.push(id);
+}
+
+
+/**
+ * Stops all intervals of the game.
+ */
+function stopAllIntervals() {
+    intervalIds.forEach((id) => clearInterval(id));
+    intervalIds = [];
+}
+
+
+/**
+ * Starts a new game with a fresh level.
  */
 function startGame() {
+    resetGame();
+    world = new World(canvas, keyboard, createLevel1());
     document.getElementById('startScreen').classList.add('d-none');
+}
+
+
+/**
+ * Stops the current game completely (loops, drawing, input).
+ */
+function resetGame() {
+    if (world) world.stop();
+    stopAllIntervals();
+    keyboard.reset();
+}
+
+
+/**
+ * Connects the keyboard with the game input.
+ */
+function bindKeyboardEvents() {
+    window.addEventListener('keydown', (event) => keyboard.handleKey(event, true));
+    window.addEventListener('keyup', (event) => keyboard.handleKey(event, false));
 }
 
 
