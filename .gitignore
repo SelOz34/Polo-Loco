@@ -1,0 +1,19 @@
+cat > .gitignore << 'EOF'
+# Betriebssystem
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Abhängigkeiten / Logs
+node_modules/
+*.log
+
+# Quelldateien der Grafiken (nicht benötigt im Spiel)
+*.ai
+*.psd
+EOF
