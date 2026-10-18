@@ -3,7 +3,7 @@
  * and draws everything onto the canvas.
  */
 class World {
-    character = new DrawableObject();
+    character = new Character();
     level;
     canvas;
     ctx;
@@ -24,21 +24,16 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.keyboard = keyboard;
         this.level = level;
-        this.createPlaceholderCharacter();
+        this.setWorld();
         this.draw();
     }
 
 
     /**
-     * Temporary test figure to check that loading and drawing images works.
-     * Will be replaced by the real Character class in stage 5.
+     * Gives the character a reference to this world.
      */
-    createPlaceholderCharacter() {
-        this.character.loadImage('assets/img/2_character_pepe/1_idle/idle/I-1.png');
-        this.character.x = 100;
-        this.character.y = 150;
-        this.character.width = 130;
-        this.character.height = 270;
+    setWorld() {
+        this.character.world = this;
     }
 
 
