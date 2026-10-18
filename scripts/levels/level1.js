@@ -4,7 +4,21 @@
  * @returns {Level} The new level.
  */
 function createLevel1() {
-    return new Level([], [], createLevel1Backgrounds(), [], []);
+    return new Level([], createLevel1Clouds(), createLevel1Backgrounds(), [], []);
+}
+
+
+/**
+ * Creates the drifting cloud layers.
+ * @returns {Cloud[]} All clouds of the level.
+ */
+function createLevel1Clouds() {
+    const clouds = [];
+    for (let i = 0; i < 6; i++) {
+        const imageNumber = i % 2 === 0 ? 1 : 2;
+        clouds.push(new Cloud(`assets/img/5_background/layers/4_clouds/${imageNumber}.png`, i * 719));
+    }
+    return clouds;
 }
 
 
