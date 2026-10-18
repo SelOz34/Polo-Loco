@@ -9,11 +9,16 @@ function createLevel1() {
 
 
 /**
- * Creates the background layers.
+ * Creates the background layers. Each segment is 719 px wide and overlaps
+ * the next one by 1 px, so there are no gaps between the images.
  * @returns {BackgroundObject[]} All background layers of the level.
  */
 function createLevel1Backgrounds() {
-    return createBackgroundSegment(0, 1);
+    const backgrounds = [];
+    for (let i = -1; i <= 6; i++) {
+        backgrounds.push(...createBackgroundSegment(i * 719, Math.abs(i) % 2 === 0 ? 1 : 2));
+    }
+    return backgrounds;
 }
 
 
