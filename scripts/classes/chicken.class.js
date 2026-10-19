@@ -16,6 +16,8 @@ class Chicken extends Enemy {
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/3_w.png'
     ];
 
+    imageDead = 'assets/img/3_enemies_chicken/chicken_normal/2_dead/dead.png';
+
 
     /**
      * Creates a chicken at the given x position with a random speed.
@@ -25,6 +27,7 @@ class Chicken extends Enemy {
         super();
         this.loadImage(this.imagesWalking[0]);
         this.loadImages(this.imagesWalking);
+        this.loadImages([this.imageDead]);
         this.x = x;
         this.speed = 0.4 + Math.random() * 0.5;
         this.animate();
@@ -36,14 +39,23 @@ class Chicken extends Enemy {
      */
     animate() {
         setStoppableInterval(() => this.move(), 1000 / 60);
-        setStoppableInterval(() => this.playAnimation(this.imagesWalking), 150);
+        setStoppableInterval(() => this.updateAnimation(), 150);
     }
 
 
     /**
-     * Moves the chicken to the left while it is active.
+     * Moves the chicken to the left while it is alive and active.
      */
     move() {
-        if (this.isActive()) this.moveLeft();
+        if (!this.isDead() && this.isActive()) this.moveLeft();
+    }
+
+
+    /**
+     * Shows the walking animation or the dead image.
+     */
+    updateAnimation() {
+        if (this.isDead()) this.img = this.imageCache[this.imageDead];
+        else this.playAnimation(this.imagesWalking);
     }
 }

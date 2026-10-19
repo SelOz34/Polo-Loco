@@ -9,6 +9,7 @@ class World {
     ctx;
     keyboard;
     cameraX = 0;
+    defeatedEnemies = 0;
     isRunning = true;
     animationFrameId;
 
@@ -52,16 +53,61 @@ class World {
      */
     checkGameState() {
         this.checkEnemyCollisions();
+        this.removeFinishedObjects();
     }
 
 
     /**
-     * Checks every enemy for a collision with Pepe and lets him take damage.
+     * Checks every living enemy for a collision with Pepe.
      */
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) this.character.takeDamage(enemy.damage);
+            if (enemy.isDead() || !this.character.isColliding(enemy)) return;
+            if (this.isStomping(enemy)) this.stompEnemy(enemy);
+            else this.character.takeDamage(enemy.damage);
         });
+    }
+
+
+    /**
+     * Checks whether Pepe lands on top of an enemy.
+     * Only counts if he is falling and his feet are in the upper part of the enemy.
+     * @param {Enemy} enemy - The enemy Pepe collides with.
+     * @returns {boolean} True if the enemy is stomped.
+     */
+    isStomping(enemy) {
+        if (!enemy.canBeStomped || this.character.speedY >= 0) return false;
+        const feet = this.character.getHitbox().bottom;
+        const box = enemy.getHitbox();
+        return feet < box.top + (box.bottom - box.top) * 0.6;
+    }
+
+
+    /**
+     * Kills a stomped enemy and lets Pepe bounce off.
+     * @param {Enemy} enemy - The stomped enemy.
+     */
+    stompEnemy(enemy) {
+        this.killEnemy(enemy);
+        this.character.bounce();
+    }
+
+
+    /**
+     * Kills an enemy and counts it.
+     * @param {Enemy} enemy - The enemy to kill.
+     */
+    killEnemy(enemy) {
+        enemy.die();
+        this.defeatedEnemies++;
+    }
+
+
+    /**
+     * Removes enemies that have been dead long enough.
+     */
+    removeFinishedObjects() {
+        this.level.enemies = this.level.enemies.filter((enemy) => !enemy.isRemovable());
     }
 
 

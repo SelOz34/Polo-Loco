@@ -161,6 +161,14 @@ class Character extends MovableObject {
 
 
     /**
+     * Small jump after stomping an enemy.
+     */
+    bounce() {
+        this.speedY = 11;
+    }
+
+
+    /**
      * Remembers the time of the last player action (used for the sleep animation).
      */
     registerAction() {
