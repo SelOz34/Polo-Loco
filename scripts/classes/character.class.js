@@ -15,6 +15,7 @@ class Character extends MovableObject {
     offset = { top: 115, right: 35, bottom: 12, left: 30 };
     world;
     lastActionTime = Date.now();
+    deathFinished = false;
 
     imagesIdle = [
         'assets/img/2_character_pepe/1_idle/idle/I-1.png',
@@ -69,6 +70,16 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/4_hurt/H-43.png'
     ];
 
+    imagesDead = [
+        'assets/img/2_character_pepe/5_dead/D-51.png',
+        'assets/img/2_character_pepe/5_dead/D-52.png',
+        'assets/img/2_character_pepe/5_dead/D-53.png',
+        'assets/img/2_character_pepe/5_dead/D-54.png',
+        'assets/img/2_character_pepe/5_dead/D-55.png',
+        'assets/img/2_character_pepe/5_dead/D-56.png',
+        'assets/img/2_character_pepe/5_dead/D-57.png'
+    ];
+
 
     /**
      * Creates Pepe, preloads his animations and starts his loops.
@@ -81,6 +92,7 @@ class Character extends MovableObject {
         this.loadImages(this.imagesWalking);
         this.loadImages(this.imagesJumping);
         this.loadImages(this.imagesHurt);
+        this.loadImages(this.imagesDead);
         this.applyGravity();
         this.animate();
     }
@@ -97,9 +109,10 @@ class Character extends MovableObject {
 
     /**
      * Reads the keyboard, moves Pepe and lets the camera follow him.
+     * Does nothing once he is dead.
      */
     handleMovement() {
-        if (!this.world) return;
+        if (!this.world || this.isDead()) return;
         if (this.canMoveRight()) this.walkRight();
         if (this.canMoveLeft()) this.walkLeft();
         if (this.canJump()) this.startJump();
@@ -208,7 +221,8 @@ class Character extends MovableObject {
      * Chooses and plays the animation that matches Pepe's current state.
      */
     updateAnimation() {
-        if (this.isHurt()) this.showState('hurt', this.imagesHurt);
+        if (this.isDead()) this.playDeathAnimation();
+        else if (this.isHurt()) this.showState('hurt', this.imagesHurt);
         else if (this.isAboveGround()) this.playJumpAnimation();
         else if (this.isWalking()) this.showState('walk', this.imagesWalking);
         else if (this.isSleeping()) this.showState('sleep', this.imagesLongIdle, true, 2);
@@ -228,5 +242,16 @@ class Character extends MovableObject {
         else if (this.speedY > -3) index = 4;
         else if (this.speedY > -10) index = 5;
         this.img = this.imageCache[this.imagesJumping[index]];
+    }
+
+
+    /**
+     * Plays the death animation once and marks it as finished afterwards.
+     */
+    playDeathAnimation() {
+        this.showState('dead', this.imagesDead, false);
+        if (this.currentImage > this.imagesDead.length + 5) {
+            this.deathFinished = true;
+        }
     }
 }

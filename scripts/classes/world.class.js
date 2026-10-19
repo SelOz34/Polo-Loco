@@ -61,6 +61,7 @@ class World {
      * Checks every living enemy for a collision with Pepe.
      */
     checkEnemyCollisions() {
+        if (this.character.isDead()) return;
         this.level.enemies.forEach((enemy) => {
             if (enemy.isDead() || !this.character.isColliding(enemy)) return;
             if (this.isStomping(enemy)) this.stompEnemy(enemy);
