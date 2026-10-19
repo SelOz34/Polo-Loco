@@ -11,7 +11,9 @@ class Character extends MovableObject {
     speed = 5;
     acceleration = 0.9;
     jumpSpeed = 17;
+    sleepDelay = 10000;
     world;
+    lastActionTime = Date.now();
 
     imagesIdle = [
         'assets/img/2_character_pepe/1_idle/idle/I-1.png',
@@ -24,6 +26,19 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/1_idle/idle/I-8.png',
         'assets/img/2_character_pepe/1_idle/idle/I-9.png',
         'assets/img/2_character_pepe/1_idle/idle/I-10.png'
+    ];
+
+    imagesLongIdle = [
+        'assets/img/2_character_pepe/1_idle/long_idle/I-11.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-12.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-13.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-14.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-15.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-16.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-17.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-18.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-19.png',
+        'assets/img/2_character_pepe/1_idle/long_idle/I-20.png'
     ];
 
     imagesWalking = [
@@ -55,6 +70,7 @@ class Character extends MovableObject {
         super();
         this.loadImage(this.imagesIdle[0]);
         this.loadImages(this.imagesIdle);
+        this.loadImages(this.imagesLongIdle);
         this.loadImages(this.imagesWalking);
         this.loadImages(this.imagesJumping);
         this.applyGravity();
@@ -113,6 +129,7 @@ class Character extends MovableObject {
     walkRight() {
         this.moveRight();
         this.otherDirection = false;
+        this.registerAction();
     }
 
 
@@ -122,6 +139,7 @@ class Character extends MovableObject {
     walkLeft() {
         this.moveLeft();
         this.otherDirection = true;
+        this.registerAction();
     }
 
 
@@ -130,6 +148,23 @@ class Character extends MovableObject {
      */
     startJump() {
         this.jump(this.jumpSpeed);
+        this.registerAction();
+    }
+
+
+    /**
+     * Remembers the time of the last player action (used for the sleep animation).
+     */
+    registerAction() {
+        this.lastActionTime = Date.now();
+    }
+
+
+    /**
+     * @returns {boolean} True if Pepe did nothing for longer than the sleep delay.
+     */
+    isSleeping() {
+        return Date.now() - this.lastActionTime > this.sleepDelay;
     }
 
 
@@ -147,6 +182,7 @@ class Character extends MovableObject {
     updateAnimation() {
         if (this.isAboveGround()) this.playJumpAnimation();
         else if (this.isWalking()) this.showState('walk', this.imagesWalking);
+        else if (this.isSleeping()) this.showState('sleep', this.imagesLongIdle, true, 2);
         else this.showState('idle', this.imagesIdle, true, 2);
     }
 
