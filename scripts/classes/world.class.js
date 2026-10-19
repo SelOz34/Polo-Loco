@@ -30,10 +30,11 @@ class World {
 
 
     /**
-     * Gives the character a reference to this world.
+     * Gives the character and all enemies a reference to this world.
      */
     setWorld() {
         this.character.world = this;
+        this.level.enemies.forEach((enemy) => enemy.world = this);
     }
 
 
@@ -65,6 +66,7 @@ class World {
     drawWorldObjects() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
     }
 

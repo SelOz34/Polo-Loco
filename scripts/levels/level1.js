@@ -4,7 +4,22 @@
  * @returns {Level} The new level.
  */
 function createLevel1() {
-    return new Level([], createLevel1Clouds(), createLevel1Backgrounds(), [], []);
+    return new Level(createLevel1Enemies(), createLevel1Clouds(), createLevel1Backgrounds(), [], []);
+}
+
+
+/**
+ * Creates the chickens and chicks.
+ * The first enemies start far enough away so the player is not overrun at the start.
+ * @returns {Enemy[]} All enemies of the level.
+ */
+function createLevel1Enemies() {
+    const chickenPositions = [850, 1300, 1750, 2200, 2650, 3000];
+    const chickPositions = [1050, 1550, 2000, 2450, 2850];
+    const enemies = [];
+    chickenPositions.forEach((x) => enemies.push(new Chicken(x)));
+    chickPositions.forEach((x) => enemies.push(new SmallChicken(x)));
+    return enemies;
 }
 
 
