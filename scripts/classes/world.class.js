@@ -14,7 +14,7 @@ class World {
 
 
     /**
-     * Creates the world and starts the drawing loop.
+     * Creates the world and starts drawing and checking.
      * @param {HTMLCanvasElement} canvas - The game canvas.
      * @param {Keyboard} keyboard - The input state.
      * @param {Level} level - The level to play.
@@ -26,6 +26,7 @@ class World {
         this.level = level;
         this.setWorld();
         this.draw();
+        this.run();
     }
 
 
@@ -35,6 +36,32 @@ class World {
     setWorld() {
         this.character.world = this;
         this.level.enemies.forEach((enemy) => enemy.world = this);
+    }
+
+
+    /**
+     * Starts the game logic loop.
+     */
+    run() {
+        setStoppableInterval(() => this.checkGameState(), 1000 / 60);
+    }
+
+
+    /**
+     * Runs all checks of one game tick.
+     */
+    checkGameState() {
+        this.checkEnemyCollisions();
+    }
+
+
+    /**
+     * Checks every enemy for a collision with Pepe and lets him take damage.
+     */
+    checkEnemyCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) this.character.takeDamage(enemy.damage);
+        });
     }
 
 

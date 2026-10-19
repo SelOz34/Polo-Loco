@@ -7,6 +7,8 @@ class Chicken extends Enemy {
     height = 68;
     y = 355;
     groundY = 355;
+    damage = 20;
+    offset = { top: 6, right: 4, bottom: 8, left: 4 };
 
     imagesWalking = [
         'assets/img/3_enemies_chicken/chicken_normal/1_walk/1_w.png',

@@ -12,6 +12,7 @@ class Character extends MovableObject {
     acceleration = 0.9;
     jumpSpeed = 17;
     sleepDelay = 10000;
+    offset = { top: 115, right: 35, bottom: 12, left: 30 };
     world;
     lastActionTime = Date.now();
 
@@ -62,6 +63,12 @@ class Character extends MovableObject {
         'assets/img/2_character_pepe/3_jump/J-39.png'
     ];
 
+    imagesHurt = [
+        'assets/img/2_character_pepe/4_hurt/H-41.png',
+        'assets/img/2_character_pepe/4_hurt/H-42.png',
+        'assets/img/2_character_pepe/4_hurt/H-43.png'
+    ];
+
 
     /**
      * Creates Pepe, preloads his animations and starts his loops.
@@ -73,6 +80,7 @@ class Character extends MovableObject {
         this.loadImages(this.imagesLongIdle);
         this.loadImages(this.imagesWalking);
         this.loadImages(this.imagesJumping);
+        this.loadImages(this.imagesHurt);
         this.applyGravity();
         this.animate();
     }
@@ -161,6 +169,18 @@ class Character extends MovableObject {
 
 
     /**
+     * Applies damage to Pepe.
+     * @param {number} damage - Amount of energy to remove.
+     * @returns {boolean} True if the damage was applied.
+     */
+    takeDamage(damage) {
+        if (!this.hit(damage)) return false;
+        this.registerAction();
+        return true;
+    }
+
+
+    /**
      * @returns {boolean} True if Pepe did nothing for longer than the sleep delay.
      */
     isSleeping() {
@@ -180,7 +200,8 @@ class Character extends MovableObject {
      * Chooses and plays the animation that matches Pepe's current state.
      */
     updateAnimation() {
-        if (this.isAboveGround()) this.playJumpAnimation();
+        if (this.isHurt()) this.showState('hurt', this.imagesHurt);
+        else if (this.isAboveGround()) this.playJumpAnimation();
         else if (this.isWalking()) this.showState('walk', this.imagesWalking);
         else if (this.isSleeping()) this.showState('sleep', this.imagesLongIdle, true, 2);
         else this.showState('idle', this.imagesIdle, true, 2);

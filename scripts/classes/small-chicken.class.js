@@ -7,7 +7,9 @@ class SmallChicken extends Enemy {
     height = 49;
     y = 376;
     groundY = 376;
+    damage = 10;
     acceleration = 0.6;
+    offset = { top: 4, right: 5, bottom: 5, left: 5 };
 
     imagesWalking = [
         'assets/img/3_enemies_chicken/chicken_small/1_walk/1_w.png',

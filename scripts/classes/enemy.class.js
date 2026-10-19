@@ -4,6 +4,7 @@
  */
 class Enemy extends MovableObject {
     world;
+    damage = 20;
     activationDistance = 650;
 
 

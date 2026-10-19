@@ -8,6 +8,9 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 1;
     groundY = 0;
+    energy = 100;
+    lastHit = 0;
+    hurtDuration = 1000;
     animationState = '';
 
 
@@ -72,6 +75,37 @@ class MovableObject extends DrawableObject {
      */
     jump(jumpSpeed) {
         this.speedY = jumpSpeed;
+    }
+
+
+    /**
+     * Reduces the energy of the object, unless it is still hurt or already dead.
+     * @param {number} damage - Amount of energy to remove.
+     * @returns {boolean} True if the hit was applied.
+     */
+    hit(damage) {
+        if (this.isHurt() || this.isDead()) return false;
+        this.energy = Math.max(0, this.energy - damage);
+        this.lastHit = Date.now();
+        return true;
+    }
+
+
+    /**
+     * Checks whether the object was hit recently.
+     * @returns {boolean} True while the hurt time is running.
+     */
+    isHurt() {
+        return Date.now() - this.lastHit < this.hurtDuration;
+    }
+
+
+    /**
+     * Checks whether the object has no energy left.
+     * @returns {boolean} True if the object is dead.
+     */
+    isDead() {
+        return this.energy <= 0;
     }
 
 
