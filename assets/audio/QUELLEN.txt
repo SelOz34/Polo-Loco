@@ -1,21 +1,22 @@
-Sound-Quellen (alle frei nutzbar)
+Sound-Quellen (alle CC0, frei nutzbar) – geprüft am 20.10.2026
 
 music.mp3           "Del Rio Bravo" – Kevin MacLeod (CC0), ursprünglich FreePD (freepd.com, seit 2025 offline;
                     Archiv: https://web.archive.org/web/2024/https://freepd.com/),
                     bezogen über https://github.com/SoundSafari/CC0-1.0-Music
-jump.mp3            phaseJump1 – Kenney "Digital Audio" (CC0)
-bottle-collect.mp3  powerUp2 – Kenney "Digital Audio" (CC0)
-win.mp3             you_win – Kenney "Voiceover Pack" (CC0)
-lose.mp3            game_over – Kenney "Voiceover Pack" (CC0)
-hurt.mp3            Hit2 – The Motion Monkey "Retro Arcade Sounds" (CC0)
-coin.mp3            retro_coin_01 – rubberduck "50 CC0 retro synth SFX", opengameart.org (CC0)
-bottle-break.mp3    bfh1_glass_breaking_02 – rubberduck "75 CC0 breaking/falling/hit SFX", opengameart.org (CC0)
-snore.mp3           snore – rubberduck "80 CC0 creature SFX", opengameart.org (CC0)
-throw.mp3           Swish 1 – Ben Burnes "Micro Pack - Organic Wooshes" (CC0)
+jump.mp3            phaseJump1 – Kenney "Digital Audio" – https://kenney.nl/assets/digital-audio
+bottle-collect.mp3  powerUp2 – Kenney "Digital Audio" – https://kenney.nl/assets/digital-audio
+win.mp3             you_win – Kenney "Voiceover Pack" – https://kenney.nl/assets/voiceover-pack
+lose.mp3            game_over – Kenney "Voiceover Pack" – https://kenney.nl/assets/voiceover-pack
+coin.mp3            retro_coin_01 – rubberduck "50 CC0 retro / synth SFX" – https://opengameart.org/content/50-cc0-retro-synth-sfx
+bottle-break.mp3    bfh1_glass_breaking_02 – rubberduck "75 CC0 breaking / falling / hit sfx" – https://opengameart.org/content/75-cc0-breaking-falling-hit-sfx
+snore.mp3           snore – rubberduck "80 CC0 creature SFX" – https://opengameart.org/content/80-cc0-creature-sfx
+hurt.mp3            human_07 – rubberduck "80 CC0 creature SFX 2" – https://opengameart.org/content/80-cc0-creture-sfx-2
+throw.mp3           blade_01 – rubberduck "80 CC0 RPG SFX" – https://opengameart.org/content/80-cc0-rpg-sfx
+chicken-dead.mp3    evsecrets "Chickens clucking and rooster with cockadoodledoo" – https://freesound.org/people/evsecrets/sounds/346961/
+boss-alert.mp3      evsecrets (wie oben), tiefer gepitcht
+boss-hurt.mp3       evsecrets (wie oben), tiefer gepitcht
+boss-dead.mp3       evsecrets (wie oben), zusammengeschnitten und tiefer gepitcht
+chick-dead.mp3      AGFX "Chicks very young" – https://freesound.org/people/AGFX/sounds/43380/
 
-chicken-dead.mp3    evsecrets "Chickens clucking and rooster" – https://freesound.org/people/evsecrets/sounds/346961/ (CC0)
-boss-alert.mp3      evsecrets (wie oben), tiefer gepitcht (CC0)
-boss-hurt.mp3       evsecrets (wie oben), tiefer gepitcht (CC0)
-boss-dead.mp3       evsecrets (wie oben), zusammengeschnitten und tiefer gepitcht (CC0)
-chick-dead.mp3      AGFX – https://freesound.org/people/AGFX/sounds/43380/ (CC0)
-(Zugeschnittene Versionen aus MineClone2, Lizenzangaben laut mods/ENTITIES/mobs_mc/LICENSE-media.md)
+Die Hühner-Sounds sind zugeschnittene Versionen aus dem Spiel MineClone2
+(Lizenzangaben: mods/ENTITIES/mobs_mc/LICENSE-media.md).
