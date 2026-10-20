@@ -1,6 +1,8 @@
 Sound-Quellen (alle frei nutzbar)
 
-music.mp3           "Del Rio Bravo" – Kevin MacLeod, https://freepd.com/ (CC0)
+music.mp3           "Del Rio Bravo" – Kevin MacLeod (CC0), ursprünglich FreePD (freepd.com, seit 2025 offline;
+                    Archiv: https://web.archive.org/web/2024/https://freepd.com/),
+                    bezogen über https://github.com/SoundSafari/CC0-1.0-Music
 jump.mp3            phaseJump1 – Kenney "Digital Audio" (CC0)
 bottle-collect.mp3  powerUp2 – Kenney "Digital Audio" (CC0)
 win.mp3             you_win – Kenney "Voiceover Pack" (CC0)
