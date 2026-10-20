@@ -12,6 +12,8 @@ class World {
     defeatedEnemies = 0;
     isRunning = true;
     animationFrameId;
+    healthBar;
+    coinBar;
 
 
     /**
@@ -25,9 +27,19 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.keyboard = keyboard;
         this.level = level;
+        this.createStatusBars();
         this.setWorld();
         this.draw();
         this.run();
+    }
+
+
+    /**
+     * Creates the status bars for health and coins.
+     */
+    createStatusBars() {
+        this.healthBar = new StatusBar('health', 15, 0, 100);
+        this.coinBar = new StatusBar('coin', 15, 42, 0);
     }
 
 
@@ -53,6 +65,7 @@ class World {
      */
     checkGameState() {
         this.checkEnemyCollisions();
+        this.collectCoins();
         this.removeFinishedObjects();
     }
 
@@ -65,7 +78,7 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (enemy.isDead() || !this.character.isColliding(enemy)) return;
             if (this.isStomping(enemy)) this.stompEnemy(enemy);
-            else this.character.takeDamage(enemy.damage);
+            else if (this.character.takeDamage(enemy.damage)) this.healthBar.setPercentage(this.character.energy);
         });
     }
 
@@ -105,6 +118,19 @@ class World {
 
 
     /**
+     * Collects all coins Pepe touches and updates the coin bar.
+     */
+    collectCoins() {
+        this.level.coins = this.level.coins.filter((coin) => {
+            if (!this.character.isColliding(coin)) return true;
+            this.character.coins++;
+            return false;
+        });
+        this.coinBar.setPercentage(this.character.coins / this.level.totalCoins * 100);
+    }
+
+
+    /**
      * Removes enemies that have been dead long enough.
      */
     removeFinishedObjects() {
@@ -130,6 +156,7 @@ class World {
         this.ctx.translate(camera, 0);
         this.drawWorldObjects();
         this.ctx.translate(-camera, 0);
+        this.drawStatusBars();
         if (this.isRunning) this.animationFrameId = requestAnimationFrame(() => this.draw());
     }
 
@@ -140,8 +167,18 @@ class World {
     drawWorldObjects() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+    }
+
+
+    /**
+     * Draws the fixed status bars on top of the game.
+     */
+    drawStatusBars() {
+        this.addToMap(this.healthBar);
+        this.addToMap(this.coinBar);
     }
 
 

@@ -16,6 +16,7 @@ class Character extends MovableObject {
     world;
     lastActionTime = Date.now();
     deathFinished = false;
+    coins = 0;
 
     imagesIdle = [
         'assets/img/2_character_pepe/1_idle/idle/I-1.png',

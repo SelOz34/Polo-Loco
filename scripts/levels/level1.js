@@ -4,7 +4,7 @@
  * @returns {Level} The new level.
  */
 function createLevel1() {
-    return new Level(createLevel1Enemies(), createLevel1Clouds(), createLevel1Backgrounds(), [], []);
+    return new Level(createLevel1Enemies(), createLevel1Clouds(), createLevel1Backgrounds(), createLevel1Coins(), []);
 }
 
 
@@ -65,4 +65,19 @@ function createBackgroundSegment(x, imageNumber) {
         new BackgroundObject(`${layerPath}2_second_layer/${imageNumber}.png`, x),
         new BackgroundObject(`${layerPath}1_first_layer/${imageNumber}.png`, x)
     ];
+}
+
+
+/**
+ * Creates the coins, arranged in small arcs.
+ * @returns {Coin[]} All coins of the level.
+ */
+function createLevel1Coins() {
+    const positions = [
+        [400, 260], [470, 210], [540, 260],
+        [1150, 230], [1220, 170], [1290, 230],
+        [1900, 250], [1970, 190], [2040, 250],
+        [2750, 200]
+    ];
+    return positions.map(([x, y]) => new Coin(x, y));
 }
