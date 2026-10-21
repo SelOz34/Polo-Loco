@@ -14,6 +14,7 @@ class World {
     animationFrameId;
     healthBar;
     coinBar;
+    bottleBar;
 
 
     /**
@@ -35,11 +36,12 @@ class World {
 
 
     /**
-     * Creates the status bars for health and coins.
+     * Creates the status bars for health, coins and bottles.
      */
     createStatusBars() {
         this.healthBar = new StatusBar('health', 15, 0, 100);
         this.coinBar = new StatusBar('coin', 15, 42, 0);
+        this.bottleBar = new StatusBar('bottle', 15, 84, 0);
     }
 
 
@@ -66,6 +68,7 @@ class World {
     checkGameState() {
         this.checkEnemyCollisions();
         this.collectCoins();
+        this.collectBottles();
         this.removeFinishedObjects();
     }
 
@@ -131,6 +134,27 @@ class World {
 
 
     /**
+     * Collects all bottles Pepe touches and updates the bottle bar.
+     */
+    collectBottles() {
+        this.level.bottles = this.level.bottles.filter((bottle) => {
+            if (!this.character.isColliding(bottle)) return true;
+            this.character.bottles++;
+            return false;
+        });
+        this.updateBottleBar();
+    }
+
+
+    /**
+     * Shows the current number of bottles in the bottle bar.
+     */
+    updateBottleBar() {
+        this.bottleBar.setPercentage(this.character.bottles / this.level.totalBottles * 100);
+    }
+
+
+    /**
      * Removes enemies that have been dead long enough.
      */
     removeFinishedObjects() {
@@ -168,6 +192,7 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
     }
@@ -179,6 +204,7 @@ class World {
     drawStatusBars() {
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
+        this.addToMap(this.bottleBar);
     }
 
 

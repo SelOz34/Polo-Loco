@@ -4,7 +4,7 @@
  * @returns {Level} The new level.
  */
 function createLevel1() {
-    return new Level(createLevel1Enemies(), createLevel1Clouds(), createLevel1Backgrounds(), createLevel1Coins(), []);
+    return new Level(createLevel1Enemies(), createLevel1Clouds(), createLevel1Backgrounds(), createLevel1Coins(), createLevel1Bottles());
 }
 
 
@@ -80,4 +80,14 @@ function createLevel1Coins() {
         [2750, 200]
     ];
     return positions.map(([x, y]) => new Coin(x, y));
+}
+
+
+/**
+ * Creates the salsa bottles on the ground.
+ * @returns {Bottle[]} All bottles of the level.
+ */
+function createLevel1Bottles() {
+    const positions = [350, 620, 900, 1120, 1400, 1650, 1880, 2100, 2380, 2620, 2900, 3150];
+    return positions.map((x) => new Bottle(x));
 }
