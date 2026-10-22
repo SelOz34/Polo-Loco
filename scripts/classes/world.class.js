@@ -9,6 +9,9 @@ class World {
     ctx;
     keyboard;
     cameraX = 0;
+    throwableObjects = [];
+    lastThrowTime = 0;
+    throwCooldown = 600;
     defeatedEnemies = 0;
     isRunning = true;
     animationFrameId;
@@ -66,10 +69,43 @@ class World {
      * Runs all checks of one game tick.
      */
     checkGameState() {
+        this.checkThrowObjects();
         this.checkEnemyCollisions();
+        this.checkBottleHits();
         this.collectCoins();
         this.collectBottles();
         this.removeFinishedObjects();
+    }
+
+
+    /**
+     * Throws a bottle if the throw key is pressed and throwing is allowed.
+     */
+    checkThrowObjects() {
+        if (this.canThrowBottle()) this.throwBottle();
+    }
+
+
+    /**
+     * @returns {boolean} True if Pepe is alive, has bottles and the cooldown is over.
+     */
+    canThrowBottle() {
+        const cooldownOver = Date.now() - this.lastThrowTime > this.throwCooldown;
+        return this.keyboard.throw && this.character.bottles > 0 && !this.character.isDead() && cooldownOver;
+    }
+
+
+    /**
+     * Creates a flying bottle in Pepe's viewing direction and updates the bottle bar.
+     */
+    throwBottle() {
+        const direction = this.character.otherDirection ? -1 : 1;
+        const x = this.character.x + (direction > 0 ? 70 : -10);
+        this.throwableObjects.push(new ThrowableObject(x, this.character.y + 110, direction));
+        this.character.bottles--;
+        this.character.registerAction();
+        this.lastThrowTime = Date.now();
+        this.updateBottleBar();
     }
 
 
@@ -121,6 +157,29 @@ class World {
 
 
     /**
+     * Checks whether a flying bottle hits a living enemy.
+     */
+    checkBottleHits() {
+        this.throwableObjects.forEach((bottle) => {
+            if (bottle.isSplashing) return;
+            const target = this.level.enemies.find((enemy) => !enemy.isDead() && bottle.isColliding(enemy));
+            if (target) this.hitEnemyWithBottle(bottle, target);
+        });
+    }
+
+
+    /**
+     * Lets the bottle splash and kills the enemy.
+     * @param {ThrowableObject} bottle - The bottle that hit.
+     * @param {Enemy} enemy - The enemy that was hit.
+     */
+    hitEnemyWithBottle(bottle, enemy) {
+        bottle.splash();
+        this.killEnemy(enemy);
+    }
+
+
+    /**
      * Collects all coins Pepe touches and updates the coin bar.
      */
     collectCoins() {
@@ -155,9 +214,10 @@ class World {
 
 
     /**
-     * Removes enemies that have been dead long enough.
+     * Removes splashed bottles and enemies that have been dead long enough.
      */
     removeFinishedObjects() {
+        this.throwableObjects = this.throwableObjects.filter((bottle) => !bottle.isFinished);
         this.level.enemies = this.level.enemies.filter((enemy) => !enemy.isRemovable());
     }
 
@@ -195,6 +255,7 @@ class World {
         this.addObjectsToMap(this.level.bottles);
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
+        this.addObjectsToMap(this.throwableObjects);
     }
 
 
