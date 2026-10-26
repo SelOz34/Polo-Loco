@@ -169,13 +169,14 @@ class World {
 
 
     /**
-     * Lets the bottle splash and kills the enemy.
+     * Lets the bottle splash and kills normal enemies.
+     * The endboss is not damaged yet (follows in stage 8c).
      * @param {ThrowableObject} bottle - The bottle that hit.
      * @param {Enemy} enemy - The enemy that was hit.
      */
     hitEnemyWithBottle(bottle, enemy) {
         bottle.splash();
-        this.killEnemy(enemy);
+        if (!(enemy instanceof Endboss)) this.killEnemy(enemy);
     }
 
 

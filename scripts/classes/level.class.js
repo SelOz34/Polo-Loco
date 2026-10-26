@@ -29,4 +29,13 @@ class Level {
         this.totalCoins = coins.length;
         this.totalBottles = bottles.length;
     }
+
+
+    /**
+     * Returns the endboss of the level.
+     * @returns {Endboss} The endboss.
+     */
+    get endboss() {
+        return this.enemies.find((enemy) => enemy instanceof Endboss);
+    }
 }

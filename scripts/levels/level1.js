@@ -9,7 +9,7 @@ function createLevel1() {
 
 
 /**
- * Creates the chickens and chicks.
+ * Creates the chickens, chicks and the endboss.
  * The first enemies start far enough away so the player is not overrun at the start.
  * @returns {Enemy[]} All enemies of the level.
  */
@@ -19,6 +19,7 @@ function createLevel1Enemies() {
     const enemies = [];
     chickenPositions.forEach((x) => enemies.push(new Chicken(x)));
     chickPositions.forEach((x) => enemies.push(new SmallChicken(x)));
+    enemies.push(new Endboss());
     return enemies;
 }
 
