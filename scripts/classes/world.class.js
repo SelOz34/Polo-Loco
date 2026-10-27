@@ -18,6 +18,7 @@ class World {
     healthBar;
     coinBar;
     bottleBar;
+    endbossBar;
 
 
     /**
@@ -39,12 +40,13 @@ class World {
 
 
     /**
-     * Creates the status bars for health, coins and bottles.
+     * Creates the status bars for health, coins, bottles and the endboss.
      */
     createStatusBars() {
         this.healthBar = new StatusBar('health', 15, 0, 100);
         this.coinBar = new StatusBar('coin', 15, 42, 0);
         this.bottleBar = new StatusBar('bottle', 15, 84, 0);
+        this.endbossBar = new StatusBar('endboss', 505, 5, 100);
     }
 
 
@@ -75,6 +77,7 @@ class World {
         this.collectCoins();
         this.collectBottles();
         this.removeFinishedObjects();
+        this.endbossBar.setPercentage(this.level.endboss.energy);
     }
 
 
@@ -169,14 +172,14 @@ class World {
 
 
     /**
-     * Lets the bottle splash and kills normal enemies.
-     * The endboss is not damaged yet (follows in stage 8c).
+     * Lets the bottle splash and damages or kills the enemy.
      * @param {ThrowableObject} bottle - The bottle that hit.
      * @param {Enemy} enemy - The enemy that was hit.
      */
     hitEnemyWithBottle(bottle, enemy) {
         bottle.splash();
-        if (!(enemy instanceof Endboss)) this.killEnemy(enemy);
+        if (enemy instanceof Endboss) enemy.hitByBottle();
+        else this.killEnemy(enemy);
     }
 
 
@@ -261,12 +264,13 @@ class World {
 
 
     /**
-     * Draws the fixed status bars on top of the game.
+     * Draws the fixed status bars. The boss bar is only shown once the boss is active.
      */
     drawStatusBars() {
         this.addToMap(this.healthBar);
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
+        if (this.level.endboss.isActivated) this.addToMap(this.endbossBar);
     }
 
 

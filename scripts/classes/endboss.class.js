@@ -12,9 +12,11 @@ class Endboss extends Enemy {
     speed = 1.6;
     damage = 35;
     canBeStomped = false;
+    hurtDuration = 500;
     offset = { top: 110, right: 30, bottom: 25, left: 35 };
     isActivated = false;
     alertStartTime = 0;
+    deathFinished = false;
 
     imagesWalking = [
         'assets/img/4_enemie_boss_chicken/1_walk/G1.png',
@@ -45,6 +47,18 @@ class Endboss extends Enemy {
         'assets/img/4_enemie_boss_chicken/3_attack/G20.png'
     ];
 
+    imagesHurt = [
+        'assets/img/4_enemie_boss_chicken/4_hurt/G21.png',
+        'assets/img/4_enemie_boss_chicken/4_hurt/G22.png',
+        'assets/img/4_enemie_boss_chicken/4_hurt/G23.png'
+    ];
+
+    imagesDead = [
+        'assets/img/4_enemie_boss_chicken/5_dead/G24.png',
+        'assets/img/4_enemie_boss_chicken/5_dead/G25.png',
+        'assets/img/4_enemie_boss_chicken/5_dead/G26.png'
+    ];
+
 
     /**
      * Creates the endboss and starts its loops.
@@ -55,6 +69,8 @@ class Endboss extends Enemy {
         this.loadImages(this.imagesWalking);
         this.loadImages(this.imagesAlert);
         this.loadImages(this.imagesAttack);
+        this.loadImages(this.imagesHurt);
+        this.loadImages(this.imagesDead);
         this.animate();
     }
 
@@ -72,7 +88,7 @@ class Endboss extends Enemy {
      * Activates the boss when Pepe comes close, afterwards chases him.
      */
     move() {
-        if (!this.world) return;
+        if (!this.world || this.isDead()) return;
         if (!this.isActivated) this.checkActivation();
         else if (this.isChasing()) this.moveTowardsCharacter();
     }
@@ -101,7 +117,7 @@ class Endboss extends Enemy {
      * @returns {boolean} True if the boss is allowed to walk towards Pepe.
      */
     isChasing() {
-        return !this.isAlerting() && !this.world.character.isDead();
+        return !this.isAlerting() && !this.isHurt() && !this.world.character.isDead();
     }
 
 
@@ -135,12 +151,33 @@ class Endboss extends Enemy {
 
 
     /**
+     * Takes damage from a bottle and gets angrier (faster).
+     */
+    hitByBottle() {
+        if (this.hit(20)) this.speed += 0.4;
+    }
+
+
+    /**
      * Chooses and plays the animation that matches the current state.
      */
     updateAnimation() {
-        if (!this.isActivated || this.isAlerting()) this.showState('alert', this.imagesAlert);
+        if (this.isDead()) this.playDeathAnimation();
+        else if (this.isHurt()) this.showState('hurt', this.imagesHurt);
+        else if (!this.isActivated || this.isAlerting()) this.showState('alert', this.imagesAlert);
         else if (this.isAttacking()) this.showState('attack', this.imagesAttack);
         else this.showState('walk', this.imagesWalking);
+    }
+
+
+    /**
+     * Plays the death animation once and marks it as finished afterwards.
+     */
+    playDeathAnimation() {
+        this.showState('dead', this.imagesDead, false);
+        if (this.currentImage > this.imagesDead.length + 5) {
+            this.deathFinished = true;
+        }
     }
 
 
