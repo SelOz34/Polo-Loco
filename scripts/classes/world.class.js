@@ -15,6 +15,7 @@ class World {
     defeatedEnemies = 0;
     isRunning = true;
     animationFrameId;
+    gameEnded = false;
     healthBar;
     coinBar;
     bottleBar;
@@ -78,6 +79,7 @@ class World {
         this.collectBottles();
         this.removeFinishedObjects();
         this.endbossBar.setPercentage(this.level.endboss.energy);
+        this.checkGameEnd();
     }
 
 
@@ -223,6 +225,41 @@ class World {
     removeFinishedObjects() {
         this.throwableObjects = this.throwableObjects.filter((bottle) => !bottle.isFinished);
         this.level.enemies = this.level.enemies.filter((enemy) => !enemy.isRemovable());
+    }
+
+
+    /**
+     * Ends the game once Pepe's or the boss's death animation has finished.
+     */
+    checkGameEnd() {
+        if (this.gameEnded) return;
+        if (this.character.deathFinished) this.endGame(false);
+        else if (this.level.endboss.deathFinished) this.endGame(true);
+    }
+
+
+    /**
+     * Marks the game as ended and shows the end screen after a short delay.
+     * @param {boolean} hasWon - True if the player won.
+     */
+    endGame(hasWon) {
+        this.gameEnded = true;
+        setTimeout(() => {
+            if (this.isRunning) showEndScreen(hasWon);
+        }, 600);
+    }
+
+
+    /**
+     * Returns the statistics for the end screen.
+     * @returns {{coins: number, totalCoins: number, defeatedEnemies: number}} The statistics.
+     */
+    getStats() {
+        return {
+            coins: this.character.coins,
+            totalCoins: this.level.totalCoins,
+            defeatedEnemies: this.defeatedEnemies
+        };
     }
 
 

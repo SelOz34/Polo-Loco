@@ -77,6 +77,27 @@ canvas {
     background-position: center;
 }
 
+.end-screen {
+    justify-content: center;
+    gap: 2%;
+    background-color: var(--color-overlay);
+}
+
+.end-image {
+    max-width: 62%;
+    max-height: 52%;
+    object-fit: contain;
+}
+
+.end-stats {
+    font-size: clamp(16px, 3vw, 24px);
+    text-align: center;
+}
+
+.end-stats strong {
+    color: var(--color-primary);
+}
+
 .menu {
     display: flex;
     flex-direction: column;

@@ -3,6 +3,9 @@ let world = null;
 let keyboard = new Keyboard();
 let intervalIds = [];
 
+const winImage = './assets/img/9_intro_outro_screens/win/you-win.png';
+const loseImage = './assets/img/9_intro_outro_screens/game_over/game-over-pepe.png';
+
 
 /**
  * Initializes the page: connects keyboard, buttons and the dialog with their functions.
@@ -41,7 +44,7 @@ function stopAllIntervals() {
 function startGame() {
     resetGame();
     world = new World(canvas, keyboard, createLevel1());
-    document.getElementById('startScreen').classList.add('d-none');
+    showScreen('game');
 }
 
 
@@ -52,6 +55,39 @@ function resetGame() {
     if (world) world.stop();
     stopAllIntervals();
     keyboard.reset();
+}
+
+
+/**
+ * Stops the game and shows the win or lose screen.
+ * @param {boolean} hasWon - True if the player won.
+ */
+function showEndScreen(hasWon) {
+    const stats = world.getStats();
+    resetGame();
+    document.getElementById('endScreenImage').src = hasWon ? winImage : loseImage;
+    document.getElementById('endScreenStats').innerHTML = generateEndStatsHtml(stats);
+    showScreen('end');
+}
+
+
+/**
+ * Shows the overlays that belong to the given screen.
+ * @param {'start'|'game'|'end'} screen - The screen to show.
+ */
+function showScreen(screen) {
+    toggleElement('startScreen', screen === 'start');
+    toggleElement('endScreen', screen === 'end');
+}
+
+
+/**
+ * Shows or hides an element.
+ * @param {string} id - Id of the element.
+ * @param {boolean} isVisible - True to show the element.
+ */
+function toggleElement(id, isVisible) {
+    document.getElementById(id).classList.toggle('d-none', !isVisible);
 }
 
 
