@@ -72,12 +72,24 @@ function showEndScreen(hasWon) {
 
 
 /**
+ * Leaves the game and returns to the start screen.
+ */
+function showStartScreen() {
+    resetGame();
+    world = null;
+    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+    showScreen('start');
+}
+
+
+/**
  * Shows the overlays that belong to the given screen.
  * @param {'start'|'game'|'end'} screen - The screen to show.
  */
 function showScreen(screen) {
     toggleElement('startScreen', screen === 'start');
     toggleElement('endScreen', screen === 'end');
+    toggleElement('exitButton', screen !== 'start');
 }
 
 
@@ -105,6 +117,9 @@ function bindKeyboardEvents() {
  */
 function bindButtons() {
     bindClick('startButton', startGame);
+    bindClick('restartButton', startGame);
+    bindClick('homeButton', showStartScreen);
+    bindClick('exitButton', showStartScreen);
     bindClick('controlsButton', openControlsDialog);
 }
 
