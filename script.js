@@ -3,19 +3,22 @@ let world = null;
 let keyboard = new Keyboard();
 let soundManager = new SoundManager();
 let intervalIds = [];
+let isGameRunning = false;
 
 const winImage = './assets/img/9_intro_outro_screens/win/you-win.png';
 const loseImage = './assets/img/9_intro_outro_screens/game_over/game-over-pepe.png';
 
 
 /**
- * Initializes the page: connects keyboard, buttons and the dialog with their functions.
+ * Initializes the page: connects keyboard, buttons and the dialog
+ * with their functions and shows the saved mute state.
  */
 function init() {
     canvas = document.getElementById('canvas');
     bindKeyboardEvents();
     bindButtons();
     bindDialogEvents();
+    updateMuteIcon();
 }
 
 
@@ -45,6 +48,7 @@ function stopAllIntervals() {
 function startGame() {
     resetGame();
     world = new World(canvas, keyboard, createLevel1());
+    isGameRunning = true;
     showScreen('game');
     soundManager.startLoop('music');
 }
@@ -58,6 +62,7 @@ function resetGame() {
     stopAllIntervals();
     soundManager.stopAll();
     keyboard.reset();
+    isGameRunning = false;
 }
 
 
@@ -108,6 +113,25 @@ function toggleElement(id, isVisible) {
 
 
 /**
+ * Toggles the sound and restarts the music if a game is running.
+ */
+function toggleMute() {
+    const isMuted = soundManager.toggleMute();
+    updateMuteIcon();
+    if (!isMuted && isGameRunning) soundManager.startLoop('music');
+}
+
+
+/**
+ * Shows the icon that matches the current mute state.
+ */
+function updateMuteIcon() {
+    const icon = soundManager.isMuted ? 'sound-off' : 'sound-on';
+    document.getElementById('muteIcon').src = `./assets/img/icons/${icon}.svg`;
+}
+
+
+/**
  * Connects the keyboard with the game input.
  */
 function bindKeyboardEvents() {
@@ -124,6 +148,7 @@ function bindButtons() {
     bindClick('restartButton', startGame);
     bindClick('homeButton', showStartScreen);
     bindClick('exitButton', showStartScreen);
+    bindClick('muteButton', toggleMute);
     bindClick('controlsButton', openControlsDialog);
 }
 

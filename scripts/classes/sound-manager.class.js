@@ -1,8 +1,12 @@
 /**
- * Loads and plays all sounds of the game.
+ * Loads, plays and mutes all sounds of the game.
+ * The mute state is stored in the local storage.
  */
 class SoundManager {
     sounds = {};
+    isMuted = false;
+
+    static storageKey = 'polloLocoMuted';
 
     static files = {
         music: 'assets/audio/music.mp3',
@@ -37,9 +41,10 @@ class SoundManager {
 
 
     /**
-     * Loads all sounds.
+     * Reads the saved mute state and loads all sounds.
      */
     constructor() {
+        this.isMuted = this.loadMuteState();
         this.loadSounds();
     }
 
@@ -62,6 +67,7 @@ class SoundManager {
      * @param {string} name - Name of the sound.
      */
     play(name) {
+        if (this.isMuted) return;
         const audio = this.sounds[name];
         audio.currentTime = 0;
         audio.play().catch(() => { });
@@ -74,7 +80,7 @@ class SoundManager {
      */
     startLoop(name) {
         const audio = this.sounds[name];
-        if (!audio.paused) return;
+        if (this.isMuted || !audio.paused) return;
         audio.play().catch(() => { });
     }
 
@@ -97,5 +103,42 @@ class SoundManager {
             audio.pause();
             audio.currentTime = 0;
         });
+    }
+
+
+    /**
+     * Switches between muted and unmuted and saves the new state.
+     * @returns {boolean} The new mute state.
+     */
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+        this.saveMuteState();
+        if (this.isMuted) this.stopAll();
+        return this.isMuted;
+    }
+
+
+    /**
+     * Reads the mute state from the local storage.
+     * @returns {boolean} True if the game was muted last time.
+     */
+    loadMuteState() {
+        try {
+            return localStorage.getItem(SoundManager.storageKey) === 'true';
+        } catch (error) {
+            return false;
+        }
+    }
+
+
+    /**
+     * Saves the mute state in the local storage.
+     */
+    saveMuteState() {
+        try {
+            localStorage.setItem(SoundManager.storageKey, String(this.isMuted));
+        } catch (error) {
+            return;
+        }
     }
 }
