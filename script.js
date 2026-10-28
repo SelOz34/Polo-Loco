@@ -68,6 +68,7 @@ function resetGame() {
 function showEndScreen(hasWon) {
     const stats = world.getStats();
     resetGame();
+    soundManager.play(hasWon ? 'win' : 'lose');
     document.getElementById('endScreenImage').src = hasWon ? winImage : loseImage;
     document.getElementById('endScreenStats').innerHTML = generateEndStatsHtml(stats);
     showScreen('end');

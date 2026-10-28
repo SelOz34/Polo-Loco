@@ -87,13 +87,14 @@ class ThrowableObject extends MovableObject {
 
 
     /**
-     * Lets the bottle burst.
+     * Lets the bottle burst and plays the breaking sound.
      */
     splash() {
         if (this.isSplashing) return;
         this.isSplashing = true;
         this.speedY = 0;
         this.currentImage = 0;
+        soundManager.play('bottle-break');
     }
 
 

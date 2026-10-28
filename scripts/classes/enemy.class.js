@@ -8,6 +8,7 @@ class Enemy extends MovableObject {
     canBeStomped = true;
     activationDistance = 650;
     deathTime = 0;
+    deathSound = 'chicken-dead';
 
 
     /**
@@ -20,11 +21,12 @@ class Enemy extends MovableObject {
 
 
     /**
-     * Kills the enemy.
+     * Kills the enemy and plays its death sound.
      */
     die() {
         this.energy = 0;
         this.deathTime = Date.now();
+        soundManager.play(this.deathSound);
     }
 
 

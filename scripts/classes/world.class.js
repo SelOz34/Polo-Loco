@@ -111,6 +111,7 @@ class World {
         this.character.registerAction();
         this.lastThrowTime = Date.now();
         this.updateBottleBar();
+        soundManager.play('throw');
     }
 
 
@@ -192,6 +193,7 @@ class World {
         this.level.coins = this.level.coins.filter((coin) => {
             if (!this.character.isColliding(coin)) return true;
             this.character.coins++;
+            soundManager.play('coin');
             return false;
         });
         this.coinBar.setPercentage(this.character.coins / this.level.totalCoins * 100);
@@ -205,6 +207,7 @@ class World {
         this.level.bottles = this.level.bottles.filter((bottle) => {
             if (!this.character.isColliding(bottle)) return true;
             this.character.bottles++;
+            soundManager.play('bottle-collect');
             return false;
         });
         this.updateBottleBar();

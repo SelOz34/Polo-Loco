@@ -9,6 +9,7 @@ class SmallChicken extends Enemy {
     groundY = 376;
     damage = 10;
     acceleration = 0.6;
+    deathSound = 'chick-dead';
     offset = { top: 4, right: 5, bottom: 5, left: 5 };
 
     imagesWalking = [

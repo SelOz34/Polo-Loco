@@ -101,6 +101,7 @@ class Endboss extends Enemy {
         if (this.x - this.world.character.x < 500) {
             this.isActivated = true;
             this.alertStartTime = Date.now();
+            soundManager.play('boss-alert');
         }
     }
 
@@ -151,10 +152,12 @@ class Endboss extends Enemy {
 
 
     /**
-     * Takes damage from a bottle and gets angrier (faster).
+     * Takes damage from a bottle, plays the hurt or death sound and gets angrier (faster).
      */
     hitByBottle() {
-        if (this.hit(20)) this.speed += 0.4;
+        if (!this.hit(20)) return;
+        soundManager.play(this.isDead() ? 'boss-dead' : 'boss-hurt');
+        this.speed += 0.4;
     }
 
 

@@ -167,10 +167,11 @@ class Character extends MovableObject {
 
 
     /**
-     * Lets Pepe jump.
+     * Lets Pepe jump and plays the jump sound.
      */
     startJump() {
         this.jump(this.jumpSpeed);
+        soundManager.play('jump');
         this.registerAction();
     }
 
@@ -192,12 +193,13 @@ class Character extends MovableObject {
 
 
     /**
-     * Applies damage to Pepe.
+     * Applies damage to Pepe and plays the hurt sound.
      * @param {number} damage - Amount of energy to remove.
      * @returns {boolean} True if the damage was applied.
      */
     takeDamage(damage) {
         if (!this.hit(damage)) return false;
+        soundManager.play('hurt');
         this.registerAction();
         return true;
     }
@@ -229,6 +231,7 @@ class Character extends MovableObject {
         else if (this.isWalking()) this.showState('walk', this.imagesWalking);
         else if (this.isSleeping()) this.showState('sleep', this.imagesLongIdle, true, 2);
         else this.showState('idle', this.imagesIdle, true, 2);
+        this.updateSnoreSound();
     }
 
 
@@ -255,5 +258,14 @@ class Character extends MovableObject {
         if (this.currentImage > this.imagesDead.length + 5) {
             this.deathFinished = true;
         }
+    }
+
+
+    /**
+     * Starts the snoring sound while Pepe sleeps and stops it otherwise.
+     */
+    updateSnoreSound() {
+        if (this.animationState === 'sleep') soundManager.startLoop('snore');
+        else soundManager.stopLoop('snore');
     }
 }
