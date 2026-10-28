@@ -16,6 +16,7 @@ const loseImage = './assets/img/9_intro_outro_screens/game_over/game-over-pepe.p
 function init() {
     canvas = document.getElementById('canvas');
     bindKeyboardEvents();
+    bindTouchControls();
     bindButtons();
     bindDialogEvents();
     updateMuteIcon();
@@ -98,6 +99,7 @@ function showStartScreen() {
 function showScreen(screen) {
     toggleElement('startScreen', screen === 'start');
     toggleElement('endScreen', screen === 'end');
+    toggleElement('touchControls', screen === 'game');
     toggleElement('exitButton', screen !== 'start');
 }
 
@@ -137,6 +139,34 @@ function updateMuteIcon() {
 function bindKeyboardEvents() {
     window.addEventListener('keydown', (event) => keyboard.handleKey(event, true));
     window.addEventListener('keyup', (event) => keyboard.handleKey(event, false));
+}
+
+
+/**
+ * Connects the mobile touch buttons with the game input
+ * and disables their context menu.
+ */
+function bindTouchControls() {
+    document.querySelectorAll('.touch-btn').forEach((button) => {
+        const action = button.dataset.action;
+        button.addEventListener('pointerdown', (event) => setTouchAction(event, action, true));
+        ['pointerup', 'pointerleave', 'pointercancel'].forEach((type) => {
+            button.addEventListener(type, (event) => setTouchAction(event, action, false));
+        });
+        button.addEventListener('contextmenu', (event) => event.preventDefault());
+    });
+}
+
+
+/**
+ * Sets an input action from a touch button.
+ * @param {PointerEvent} event - The pointer event.
+ * @param {string} action - The action, e.g. 'left'.
+ * @param {boolean} isPressed - True while the button is pressed.
+ */
+function setTouchAction(event, action, isPressed) {
+    event.preventDefault();
+    keyboard[action] = isPressed;
 }
 
 
