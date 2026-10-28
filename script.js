@@ -1,6 +1,7 @@
 let canvas;
 let world = null;
 let keyboard = new Keyboard();
+let soundManager = new SoundManager();
 let intervalIds = [];
 
 const winImage = './assets/img/9_intro_outro_screens/win/you-win.png';
@@ -45,15 +46,17 @@ function startGame() {
     resetGame();
     world = new World(canvas, keyboard, createLevel1());
     showScreen('game');
+    soundManager.startLoop('music');
 }
 
 
 /**
- * Stops the current game completely (loops, drawing, input).
+ * Stops the current game completely (loops, drawing, sounds, input).
  */
 function resetGame() {
     if (world) world.stop();
     stopAllIntervals();
+    soundManager.stopAll();
     keyboard.reset();
 }
 
