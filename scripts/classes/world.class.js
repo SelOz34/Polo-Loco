@@ -1,6 +1,6 @@
 /**
- * The game world: holds the level and the character
- * and draws everything onto the canvas.
+ * The game world: holds the level and the character,
+ * checks all collisions and draws everything onto the canvas.
  */
 class World {
     character = new Character();

@@ -1,5 +1,5 @@
 /**
- * Base class for all objects that move, animate or fall.
+ * Base class for all objects that move, animate, take damage or fall.
  * @extends DrawableObject
  */
 class MovableObject extends DrawableObject {

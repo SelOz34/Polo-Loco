@@ -4,7 +4,13 @@
  * @returns {Level} The new level.
  */
 function createLevel1() {
-    return new Level(createLevel1Enemies(), createLevel1Clouds(), createLevel1Backgrounds(), createLevel1Coins(), createLevel1Bottles());
+    return new Level(
+        createLevel1Enemies(),
+        createLevel1Clouds(),
+        createLevel1Backgrounds(),
+        createLevel1Coins(),
+        createLevel1Bottles()
+    );
 }
 
 
