@@ -5,6 +5,7 @@ let soundManager = new SoundManager();
 let intervalIds = [];
 let isGameRunning = false;
 let currentLevel = 1;
+let playerProgress = createNewProgress();
 
 const winImage = './assets/img/9_intro_outro_screens/win/you-win.png';
 const loseImage = './assets/img/9_intro_outro_screens/game_over/game-over-pepe.png';
@@ -47,9 +48,19 @@ function stopAllIntervals() {
 
 
 /**
- * Starts a new game at level 1.
+ * Creates the progress of a new game: no coins, normal damage.
+ * @returns {{coins: number, damage: number}} The new progress.
+ */
+function createNewProgress() {
+    return { coins: 0, damage: 1 };
+}
+
+
+/**
+ * Starts a new game at level 1 with fresh progress.
  */
 function startGame() {
+    playerProgress = createNewProgress();
     startLevel(1);
 }
 
@@ -70,6 +81,8 @@ function startLevel(levelNumber) {
     resetGame();
     currentLevel = levelNumber;
     world = new World(canvas, keyboard, levelFactories[levelNumber - 1]());
+    world.character.coins = playerProgress.coins;
+    world.character.damage = playerProgress.damage;
     isGameRunning = true;
     showScreen('game');
     soundManager.startLoop('music');
@@ -89,17 +102,18 @@ function resetGame() {
 
 
 /**
- * Stops the game and shows the end screen of the level.
+ * Stops the game and shows the shop (level won) or the end screen (game won or lost).
  * @param {boolean} hasWon - True if the endboss was defeated.
  */
 function showEndScreen(hasWon) {
     const stats = world.getStats();
     const result = getGameResult(hasWon);
+    playerProgress.coins = stats.coins;
     resetGame();
     soundManager.play(hasWon ? 'win' : 'lose');
+    if (result === 'next') return showShop(stats.level);
     document.getElementById('endScreenImage').src = hasWon ? winImage : loseImage;
     document.getElementById('endScreenStats').innerHTML = generateEndStatsHtml(stats, result);
-    showEndButtons(result);
     showScreen('end');
 }
 
@@ -116,16 +130,6 @@ function getGameResult(hasWon) {
 
 
 /**
- * Shows "Next level" after a won level, otherwise "Play again" (starts at level 1).
- * @param {'next'|'won'|'lost'} result - How the level ended.
- */
-function showEndButtons(result) {
-    toggleElement('nextLevelButton', result === 'next');
-    toggleElement('restartButton', result !== 'next');
-}
-
-
-/**
  * Leaves the game and returns to the start screen.
  */
 function showStartScreen() {
@@ -138,11 +142,12 @@ function showStartScreen() {
 
 /**
  * Shows the overlays that belong to the given screen.
- * @param {'start'|'game'|'end'} screen - The screen to show.
+ * @param {'start'|'game'|'end'|'shop'} screen - The screen to show.
  */
 function showScreen(screen) {
     toggleElement('startScreen', screen === 'start');
     toggleElement('endScreen', screen === 'end');
+    toggleElement('shopScreen', screen === 'shop');
     toggleElement('touchControls', screen === 'game');
     toggleElement('exitButton', screen !== 'start');
 }
@@ -220,7 +225,9 @@ function setTouchAction(event, action, isPressed) {
 function bindButtons() {
     bindClick('startButton', startGame);
     bindClick('restartButton', startGame);
-    bindClick('nextLevelButton', startNextLevel);
+    bindClick('shopNextButton', startNextLevel);
+    bindClick('shopExitButton', showStartScreen);
+    bindClick('buyDamageButton', buyDamageUpgrade);
     bindClick('homeButton', showStartScreen);
     bindClick('exitButton', showStartScreen);
     bindClick('muteButton', toggleMute);

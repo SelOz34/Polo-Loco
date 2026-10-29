@@ -18,6 +18,7 @@ class Character extends MovableObject {
     deathFinished = false;
     coins = 0;
     bottles = 0;
+    damage = 1;
 
     imagesIdle = [
         'assets/img/2_character_pepe/1_idle/idle/I-1.png',

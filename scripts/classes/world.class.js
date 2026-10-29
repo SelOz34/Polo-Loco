@@ -147,7 +147,7 @@ class World {
      * @param {Enemy} enemy - The stomped enemy.
      */
     stompEnemy(enemy) {
-        if (enemy.takeStomp()) this.defeatedEnemies++;
+        if (enemy.takeStomp(this.character.damage)) this.defeatedEnemies++;
         this.character.bounce();
     }
 
@@ -181,7 +181,7 @@ class World {
      */
     hitEnemyWithBottle(bottle, enemy) {
         bottle.splash();
-        if (enemy instanceof Endboss) enemy.hitByBottle();
+        if (enemy instanceof Endboss) enemy.hitByBottle(this.character.damage);
         else this.killEnemy(enemy);
     }
 

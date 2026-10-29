@@ -158,9 +158,10 @@ class Endboss extends Enemy {
 
     /**
      * Takes one bottle hit, plays the hurt or death sound and gets angrier (faster).
+     * @param {number} damage - Pepe's damage (1 = 100 %).
      */
-    hitByBottle() {
-        if (!this.hit(1)) return;
+    hitByBottle(damage) {
+        if (!this.hit(damage)) return;
         soundManager.play(this.isDead() ? 'boss-dead' : 'boss-hurt');
         this.speed = this.baseSpeed * (2 - this.getEnergyPercentage() / 100);
     }

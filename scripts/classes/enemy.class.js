@@ -23,10 +23,11 @@ class Enemy extends MovableObject {
 
     /**
      * Takes one stomp from Pepe. The enemy dies when its energy is used up.
+     * @param {number} damage - Pepe's damage (1 = 100 %).
      * @returns {boolean} True if the enemy died from this stomp.
      */
-    takeStomp() {
-        if (!this.hit(1)) return false;
+    takeStomp(damage) {
+        if (!this.hit(damage)) return false;
         if (!this.isDead()) {
             soundManager.play(this.deathSound);
             return false;

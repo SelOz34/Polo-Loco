@@ -35,6 +35,7 @@
     <script src="./scripts/levels/level4.js" defer></script>
     <script src="./scripts/levels/level5.js" defer></script>
     <script src="./scripts/templates/templates.js" defer></script>
+    <script src="./scripts/shop.js" defer></script>
     <script src="./script.js" defer></script>
 </head>
 
@@ -57,9 +58,25 @@
                 <img id="endScreenImage" class="end-image" src="./assets/img/9_intro_outro_screens/win/you-win.png" alt="Spielende">
                 <div id="endScreenStats" class="end-stats"></div>
                 <div class="menu menu-row">
-                    <button id="nextLevelButton" class="btn btn-primary d-none">Nächstes Level</button>
                     <button id="restartButton" class="btn btn-primary">Nochmal spielen</button>
                     <button id="homeButton" class="btn">Zum Startbildschirm</button>
+                </div>
+            </div>
+
+            <div id="shopScreen" class="overlay shop-screen d-none">
+                <h2 id="shopTitle" class="shop-title">Level 1 geschafft!</h2>
+                <div class="shop-card">
+                    <h3>Shop</h3>
+                    <p class="shop-info">
+                        <img src="./assets/img/7_statusbars/3_icons/icon_coin.png" alt="">
+                        <span><strong id="shopCoins">0</strong> Münzen</span>
+                    </p>
+                    <p class="shop-info">Dein Schaden: <strong id="shopDamage">100 %</strong></p>
+                    <button id="buyDamageButton" class="btn btn-primary">+50 % Schaden für 10 Münzen</button>
+                </div>
+                <div class="menu menu-row">
+                    <button id="shopExitButton" class="btn">Spiel beenden</button>
+                    <button id="shopNextButton" class="btn btn-primary">Weiter</button>
                 </div>
             </div>
 
@@ -112,6 +129,9 @@
                 Es gibt 5 Level. In jedem Level werden die Gegner stärker: In Level 2 brauchen die Hühner
                 2 Sprünge, in Level 5 schon 5. Die Henne verträgt 10 Flaschen pro Level.
                 Verlierst du, geht es zurück zu Level 1. Eingesammelte Münzen und Flaschen erscheinen nach 15 Sekunden wieder.
+            </p>
+            <p>
+                Nach jedem Level öffnet sich der Shop: Für 10 Münzen bekommst du 50 % mehr Schaden.
             </p>
             <table class="controls-table">
                 <tr>
