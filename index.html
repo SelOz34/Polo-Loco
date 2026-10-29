@@ -27,7 +27,12 @@
     <script src="./scripts/classes/sound-manager.class.js" defer></script>
     <script src="./scripts/classes/level.class.js" defer></script>
     <script src="./scripts/classes/world.class.js" defer></script>
+    <script src="./scripts/levels/level-builder.js" defer></script>
     <script src="./scripts/levels/level1.js" defer></script>
+    <script src="./scripts/levels/level2.js" defer></script>
+    <script src="./scripts/levels/level3.js" defer></script>
+    <script src="./scripts/levels/level4.js" defer></script>
+    <script src="./scripts/levels/level5.js" defer></script>
     <script src="./scripts/templates/templates.js" defer></script>
     <script src="./script.js" defer></script>
 </head>
@@ -51,6 +56,7 @@
                 <img id="endScreenImage" class="end-image" src="./assets/img/9_intro_outro_screens/win/you-win.png" alt="Spielende">
                 <div id="endScreenStats" class="end-stats"></div>
                 <div class="menu menu-row">
+                    <button id="nextLevelButton" class="btn btn-primary d-none">Nächstes Level</button>
                     <button id="restartButton" class="btn btn-primary">Nochmal spielen</button>
                     <button id="homeButton" class="btn">Zum Startbildschirm</button>
                 </div>
@@ -100,6 +106,11 @@
             <p>
                 Hilf Pepe, sich durch die Wüste zu kämpfen! Sammle Münzen und Salsaflaschen,
                 springe den Hühnern auf den Kopf und besiege am Ende die riesige Henne mit deinen Flaschen.
+            </p>
+            <p>
+                Es gibt 5 Level. In jedem Level werden die Gegner stärker: In Level 2 brauchen die Hühner
+                2 Sprünge, in Level 5 schon 5. Die Henne verträgt 10 Flaschen pro Level.
+                Verlierst du, geht es zurück zu Level 1.
             </p>
             <table class="controls-table">
                 <tr>

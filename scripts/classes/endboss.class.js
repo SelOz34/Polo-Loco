@@ -10,6 +10,8 @@ class Endboss extends Enemy {
     y = 141;
     groundY = 141;
     speed = 1.6;
+    baseSpeed = 1.6;
+    maxEnergy = 10;
     damage = 35;
     canBeStomped = false;
     hurtDuration = 500;
@@ -62,9 +64,12 @@ class Endboss extends Enemy {
 
     /**
      * Creates the endboss and starts its loops.
+     * @param {number} strength - Level strength, the boss needs 10 bottle hits per level.
      */
-    constructor() {
+    constructor(strength) {
         super();
+        this.maxEnergy = 10 * strength;
+        this.energy = this.maxEnergy;
         this.loadImage(this.imagesAlert[0]);
         this.loadImages(this.imagesWalking);
         this.loadImages(this.imagesAlert);
@@ -152,12 +157,20 @@ class Endboss extends Enemy {
 
 
     /**
-     * Takes damage from a bottle, plays the hurt or death sound and gets angrier (faster).
+     * Takes one bottle hit, plays the hurt or death sound and gets angrier (faster).
      */
     hitByBottle() {
-        if (!this.hit(20)) return;
+        if (!this.hit(1)) return;
         soundManager.play(this.isDead() ? 'boss-dead' : 'boss-hurt');
-        this.speed += 0.4;
+        this.speed = this.baseSpeed * (2 - this.getEnergyPercentage() / 100);
+    }
+
+
+    /**
+     * @returns {number} The remaining energy in percent (0 to 100).
+     */
+    getEnergyPercentage() {
+        return this.energy / this.maxEnergy * 100;
     }
 
 

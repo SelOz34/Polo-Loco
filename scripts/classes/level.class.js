@@ -10,6 +10,7 @@ class Level {
     totalCoins;
     totalBottles;
     levelEndX = 3600;
+    number;
 
 
     /**
@@ -19,8 +20,10 @@ class Level {
      * @param {DrawableObject[]} backgroundObjects - Background layers.
      * @param {DrawableObject[]} coins - Collectable coins.
      * @param {DrawableObject[]} bottles - Collectable bottles.
+     * @param {number} number - Level number (1 to 5), also the strength of the enemies.
      */
-    constructor(enemies, clouds, backgroundObjects, coins, bottles) {
+    constructor(enemies, clouds, backgroundObjects, coins, bottles, number) {
+        this.number = number;
         this.enemies = enemies;
         this.clouds = clouds;
         this.backgroundObjects = backgroundObjects;

@@ -9,6 +9,7 @@ class Enemy extends MovableObject {
     activationDistance = 650;
     deathTime = 0;
     deathSound = 'chicken-dead';
+    hurtDuration = 400;
 
 
     /**
@@ -17,6 +18,33 @@ class Enemy extends MovableObject {
      */
     isActive() {
         return this.world && this.x - this.world.character.x < this.activationDistance;
+    }
+
+
+    /**
+     * Takes one stomp from Pepe. The enemy dies when its energy is used up.
+     * @returns {boolean} True if the enemy died from this stomp.
+     */
+    takeStomp() {
+        if (!this.hit(1)) return false;
+        if (!this.isDead()) {
+            soundManager.play(this.deathSound);
+            return false;
+        }
+        this.die();
+        return true;
+    }
+
+
+    /**
+     * Draws chickens and chicks half transparent while they are hurt.
+     * The endboss has its own hurt animation instead.
+     * @param {CanvasRenderingContext2D} ctx - The 2D rendering context.
+     */
+    draw(ctx) {
+        if (this.canBeStomped && this.isHurt() && !this.isDead()) ctx.globalAlpha = 0.5;
+        super.draw(ctx);
+        ctx.globalAlpha = 1;
     }
 
 

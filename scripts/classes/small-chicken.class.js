@@ -24,13 +24,15 @@ class SmallChicken extends Enemy {
     /**
      * Creates a small chick at the given x position with a random speed.
      * @param {number} x - Horizontal start position.
+     * @param {number} strength - Number of stomps needed to defeat it.
      */
-    constructor(x) {
+    constructor(x, strength) {
         super();
         this.loadImage(this.imagesWalking[0]);
         this.loadImages(this.imagesWalking);
         this.loadImages([this.imageDead]);
         this.x = x;
+        this.energy = strength;
         this.speed = 0.9 + Math.random() * 0.7;
         this.applyGravity();
         this.animate();

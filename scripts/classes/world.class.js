@@ -78,7 +78,7 @@ class World {
         this.collectCoins();
         this.collectBottles();
         this.removeFinishedObjects();
-        this.endbossBar.setPercentage(this.level.endboss.energy);
+        this.endbossBar.setPercentage(this.level.endboss.getEnergyPercentage());
         this.checkGameEnd();
     }
 
@@ -143,11 +143,11 @@ class World {
 
 
     /**
-     * Kills a stomped enemy and lets Pepe bounce off.
+     * Damages a stomped enemy, counts it if it dies and lets Pepe bounce off.
      * @param {Enemy} enemy - The stomped enemy.
      */
     stompEnemy(enemy) {
-        this.killEnemy(enemy);
+        if (enemy.takeStomp()) this.defeatedEnemies++;
         this.character.bounce();
     }
 
@@ -255,10 +255,11 @@ class World {
 
     /**
      * Returns the statistics for the end screen.
-     * @returns {{coins: number, totalCoins: number, defeatedEnemies: number}} The statistics.
+     * @returns {{level: number, coins: number, totalCoins: number, defeatedEnemies: number}} The statistics.
      */
     getStats() {
         return {
+            level: this.level.number,
             coins: this.character.coins,
             totalCoins: this.level.totalCoins,
             defeatedEnemies: this.defeatedEnemies
@@ -311,6 +312,22 @@ class World {
         this.addToMap(this.coinBar);
         this.addToMap(this.bottleBar);
         if (this.level.endboss.isActivated) this.addToMap(this.endbossBar);
+        this.drawLevelLabel();
+    }
+
+
+    /**
+     * Draws the number of the current level in the top right corner.
+     */
+    drawLevelLabel() {
+        const text = `Level ${this.level.number}`;
+        this.ctx.font = '28px Boogaloo, sans-serif';
+        this.ctx.textAlign = 'right';
+        this.ctx.lineWidth = 5;
+        this.ctx.strokeStyle = '#2b1407';
+        this.ctx.fillStyle = '#ffb000';
+        this.ctx.strokeText(text, 700, 90);
+        this.ctx.fillText(text, 700, 90);
     }
 
 

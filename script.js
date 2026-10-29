@@ -4,9 +4,12 @@ let keyboard = new Keyboard();
 let soundManager = new SoundManager();
 let intervalIds = [];
 let isGameRunning = false;
+let currentLevel = 1;
 
 const winImage = './assets/img/9_intro_outro_screens/win/you-win.png';
 const loseImage = './assets/img/9_intro_outro_screens/game_over/game-over-pepe.png';
+const levelFactories = [createLevel1, createLevel2, createLevel3, createLevel4, createLevel5];
+const maxLevel = levelFactories.length;
 
 
 /**
@@ -44,11 +47,29 @@ function stopAllIntervals() {
 
 
 /**
- * Starts a new game with a fresh level.
+ * Starts a new game at level 1.
  */
 function startGame() {
+    startLevel(1);
+}
+
+
+/**
+ * Starts the level after the current one.
+ */
+function startNextLevel() {
+    startLevel(currentLevel + 1);
+}
+
+
+/**
+ * Starts the given level with a fresh world.
+ * @param {number} levelNumber - Number of the level (1 to 5).
+ */
+function startLevel(levelNumber) {
     resetGame();
-    world = new World(canvas, keyboard, createLevel1());
+    currentLevel = levelNumber;
+    world = new World(canvas, keyboard, levelFactories[levelNumber - 1]());
     isGameRunning = true;
     showScreen('game');
     soundManager.startLoop('music');
@@ -68,16 +89,39 @@ function resetGame() {
 
 
 /**
- * Stops the game and shows the win or lose screen.
- * @param {boolean} hasWon - True if the player won.
+ * Stops the game and shows the end screen of the level.
+ * @param {boolean} hasWon - True if the endboss was defeated.
  */
 function showEndScreen(hasWon) {
     const stats = world.getStats();
+    const result = getGameResult(hasWon);
     resetGame();
     soundManager.play(hasWon ? 'win' : 'lose');
     document.getElementById('endScreenImage').src = hasWon ? winImage : loseImage;
-    document.getElementById('endScreenStats').innerHTML = generateEndStatsHtml(stats);
+    document.getElementById('endScreenStats').innerHTML = generateEndStatsHtml(stats, result);
+    showEndButtons(result);
     showScreen('end');
+}
+
+
+/**
+ * Decides how the level ended.
+ * @param {boolean} hasWon - True if the endboss was defeated.
+ * @returns {'next'|'won'|'lost'} 'next' if another level follows, 'won' after the last level, 'lost' otherwise.
+ */
+function getGameResult(hasWon) {
+    if (!hasWon) return 'lost';
+    return currentLevel < maxLevel ? 'next' : 'won';
+}
+
+
+/**
+ * Shows "Next level" after a won level, otherwise "Play again" (starts at level 1).
+ * @param {'next'|'won'|'lost'} result - How the level ended.
+ */
+function showEndButtons(result) {
+    toggleElement('nextLevelButton', result === 'next');
+    toggleElement('restartButton', result !== 'next');
 }
 
 
@@ -176,6 +220,7 @@ function setTouchAction(event, action, isPressed) {
 function bindButtons() {
     bindClick('startButton', startGame);
     bindClick('restartButton', startGame);
+    bindClick('nextLevelButton', startNextLevel);
     bindClick('homeButton', showStartScreen);
     bindClick('exitButton', showStartScreen);
     bindClick('muteButton', toggleMute);
