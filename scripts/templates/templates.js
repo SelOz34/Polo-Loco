@@ -7,7 +7,7 @@
 function generateEndStatsHtml(stats, result) {
     return /*html*/ `
         <p class="end-title">${generateEndTitle(stats.level, result)}</p>
-        <p>Münzen: <strong>${stats.coins}</strong> / ${stats.totalCoins}</p>
+        <p>Gesammelte Münzen: <strong>${stats.coins}</strong></p>
         <p>Besiegte Hühner: <strong>${stats.defeatedEnemies}</strong></p>
     `;
 }

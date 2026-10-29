@@ -1,8 +1,8 @@
 /**
  * A salsa bottle lying on the ground, ready to be collected.
- * @extends DrawableObject
+ * @extends CollectableObject
  */
-class Bottle extends DrawableObject {
+class Bottle extends CollectableObject {
     width = 80;
     height = 80;
     y = 349;

@@ -187,30 +187,40 @@ class World {
 
 
     /**
-     * Collects all coins Pepe touches and updates the coin bar.
+     * Collects all visible coins Pepe touches and updates the coin bar.
      */
     collectCoins() {
-        this.level.coins = this.level.coins.filter((coin) => {
-            if (!this.character.isColliding(coin)) return true;
+        this.getAvailable(this.level.coins).forEach((coin) => {
+            if (!this.character.isColliding(coin)) return;
+            coin.collect();
             this.character.coins++;
             soundManager.play('coin');
-            return false;
         });
         this.coinBar.setPercentage(this.character.coins / this.level.totalCoins * 100);
     }
 
 
     /**
-     * Collects all bottles Pepe touches and updates the bottle bar.
+     * Collects all visible bottles Pepe touches and updates the bottle bar.
      */
     collectBottles() {
-        this.level.bottles = this.level.bottles.filter((bottle) => {
-            if (!this.character.isColliding(bottle)) return true;
+        this.getAvailable(this.level.bottles).forEach((bottle) => {
+            if (!this.character.isColliding(bottle)) return;
+            bottle.collect();
             this.character.bottles++;
             soundManager.play('bottle-collect');
-            return false;
         });
         this.updateBottleBar();
+    }
+
+
+    /**
+     * Returns only the items that are currently visible (not collected or already respawned).
+     * @param {CollectableObject[]} items - Coins or bottles.
+     * @returns {CollectableObject[]} The available items.
+     */
+    getAvailable(items) {
+        return items.filter((item) => item.isAvailable());
     }
 
 
@@ -296,8 +306,8 @@ class World {
     drawWorldObjects() {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
-        this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.getAvailable(this.level.coins));
+        this.addObjectsToMap(this.getAvailable(this.level.bottles));
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
         this.addObjectsToMap(this.throwableObjects);

@@ -1,8 +1,8 @@
 /**
  * A collectable coin that pulses slightly.
- * @extends MovableObject
+ * @extends CollectableObject
  */
-class Coin extends MovableObject {
+class Coin extends CollectableObject {
     width = 110;
     height = 110;
     offset = { top: 38, right: 38, bottom: 38, left: 38 };
