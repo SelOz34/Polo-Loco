@@ -243,7 +243,7 @@ A complete list of all sound files and their sources can be found in [`assets/au
 
 ## 🤖 About the Development
 
-This project was created with the help and support of **Claude Pro** (Anthropic). Claude assisted with planning, building the code step by step, explanations, testing and researching the sound sources. The game was developed stage by stage; I reviewed and tested every step and tracked it with Git.
+This project was created with the help and support of **Claude Pro** (Anthropic).
 
 ---
 
