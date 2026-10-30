@@ -112,6 +112,7 @@ class Endboss extends Enemy {
 
 
     /**
+     * Checks whether the boss is still in its alert phase.
      * @returns {boolean} True during the alert phase right after activation.
      */
     isAlerting() {
@@ -120,6 +121,7 @@ class Endboss extends Enemy {
 
 
     /**
+     * Checks whether the boss may chase Pepe right now.
      * @returns {boolean} True if the boss is allowed to walk towards Pepe.
      */
     isChasing() {
@@ -149,6 +151,7 @@ class Endboss extends Enemy {
 
 
     /**
+     * Checks whether Pepe is within attack range.
      * @returns {boolean} True if Pepe is close enough to be attacked.
      */
     isAttacking() {
@@ -168,6 +171,7 @@ class Endboss extends Enemy {
 
 
     /**
+     * Calculates the remaining energy of the boss in percent.
      * @returns {number} The remaining energy in percent (0 to 100).
      */
     getEnergyPercentage() {

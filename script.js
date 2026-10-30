@@ -111,7 +111,10 @@ function showEndScreen(hasWon) {
     playerProgress.coins = stats.coins;
     resetGame();
     soundManager.play(hasWon ? 'win' : 'lose');
-    if (result === 'next') return showShop(stats.level);
+    if (result === 'next') {
+        showShop(stats.level);
+        return;
+    }
     document.getElementById('endScreenImage').src = hasWon ? winImage : loseImage;
     document.getElementById('endScreenStats').innerHTML = generateEndStatsHtml(stats, result);
     showScreen('end');

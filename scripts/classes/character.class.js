@@ -124,6 +124,7 @@ class Character extends MovableObject {
 
 
     /**
+     * Checks whether Pepe is allowed to walk to the right.
      * @returns {boolean} True if the right key is pressed and the level end is not reached.
      */
     canMoveRight() {
@@ -132,6 +133,7 @@ class Character extends MovableObject {
 
 
     /**
+     * Checks whether Pepe is allowed to walk to the left.
      * @returns {boolean} True if the left key is pressed and the level start is not reached.
      */
     canMoveLeft() {
@@ -140,6 +142,7 @@ class Character extends MovableObject {
 
 
     /**
+     * Checks whether Pepe is allowed to jump.
      * @returns {boolean} True if the jump key is pressed and Pepe stands on the ground.
      */
     canJump() {
@@ -207,6 +210,7 @@ class Character extends MovableObject {
 
 
     /**
+     * Checks whether Pepe has been inactive long enough to fall asleep.
      * @returns {boolean} True if Pepe did nothing for longer than the sleep delay.
      */
     isSleeping() {
@@ -215,6 +219,7 @@ class Character extends MovableObject {
 
 
     /**
+     * Checks whether the player is pressing a walking key.
      * @returns {boolean} True if a walking key is pressed.
      */
     isWalking() {

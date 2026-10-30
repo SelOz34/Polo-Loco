@@ -92,6 +92,7 @@ class World {
 
 
     /**
+     * Checks whether Pepe is allowed to throw a bottle right now.
      * @returns {boolean} True if Pepe is alive, has bottles and the cooldown is over.
      */
     canThrowBottle() {
