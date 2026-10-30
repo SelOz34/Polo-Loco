@@ -24,6 +24,7 @@ function init() {
     bindButtons();
     bindDialogEvents();
     updateMuteIcon();
+    setupFullscreen();
 }
 
 
@@ -234,6 +235,7 @@ function bindButtons() {
     bindClick('homeButton', showStartScreen);
     bindClick('exitButton', showStartScreen);
     bindClick('muteButton', toggleMute);
+    bindClick('fullscreenButton', toggleFullscreen);
     bindClick('controlsButton', openControlsDialog);
 }
 

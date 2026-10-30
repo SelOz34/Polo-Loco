@@ -243,6 +243,11 @@ canvas {
     display: none;
 }
 
+/* Vollbild-Button: nur auf Tablet- / Handy-Größe sichtbar */
+.icon-btn.fullscreen-btn {
+    display: none;
+}
+
 /* Touch-Steuerung: nur auf Tablet- / Handy-Größe sichtbar */
 .touch-controls {
     display: none;
@@ -394,6 +399,14 @@ canvas {
         display: flex;
         gap: 14px;
         pointer-events: auto;
+    }
+
+    .icon-btn.fullscreen-btn {
+        display: flex;
+    }
+
+    .icon-btn.fullscreen-btn.is-unsupported {
+        display: none;
     }
 }
 

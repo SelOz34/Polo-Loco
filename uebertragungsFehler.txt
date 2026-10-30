@@ -1,0 +1,6 @@
+Bei der Übertragung auf FTP-server gab es 2 Verbindungs Unterbrechungen.
+
+1. bei git-Ordner
+2. bei assets-Ordner
+
+Ein erneutes Upload, hat nichts gebracht. Die Unterbrechungen traten an den selben stellen erneut auf.

@@ -36,6 +36,7 @@
     <script src="./scripts/levels/level5.js" defer></script>
     <script src="./scripts/templates/templates.js" defer></script>
     <script src="./scripts/shop.js" defer></script>
+    <script src="./scripts/fullscreen.js" defer></script>
     <script src="./script.js" defer></script>
 </head>
 
@@ -81,6 +82,9 @@
             </div>
 
             <div class="hud-buttons">
+                <button id="fullscreenButton" class="icon-btn fullscreen-btn" aria-label="Vollbild an oder aus">
+                    <img id="fullscreenIcon" src="./assets/img/icons/fullscreen.svg" alt="Vollbild">
+                </button>
                 <button id="muteButton" class="icon-btn" aria-label="Ton an oder aus">
                     <img id="muteIcon" src="./assets/img/icons/sound-on.svg" alt="Ton">
                 </button>
@@ -149,6 +153,7 @@
             </table>
             <p class="dialog-hint">
                 Auf Handy und Tablet steuerst du Pepe über die Buttons im Spiel.
+                Mit dem Vollbild-Button oben blendest du die Leisten des Browsers aus.
                 Hühner besiegst du nur, wenn du von oben auf sie springst.
             </p>
         </div>

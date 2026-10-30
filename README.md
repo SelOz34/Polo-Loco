@@ -32,6 +32,7 @@ Help Pepe fight his way through the Mexican desert. Collect coins and salsa bott
 - **Status bars** for health, coins, bottles and the endboss
 - **Background music and 15 sound effects**, with a mute button whose state is saved in local storage
 - **Responsive design**: playable on desktop, tablet and smartphone (landscape) with dedicated touch controls
+- **Fullscreen mode** on mobile devices to hide the browser bars
 - **Restart without page reload**
 
 ---
@@ -44,7 +45,7 @@ Help Pepe fight his way through the Mexican desert. Collect coins and salsa bott
 | Jump | `Space` or `↑` | Up arrow button |
 | Throw bottle | `D` | Bottle button |
 
-Touch controls appear automatically on smartphones and tablets. In portrait mode, a notice asks the player to rotate the device.
+Touch controls appear automatically on smartphones and tablets, together with a fullscreen button at the top that hides the browser bars. In portrait mode, a notice asks the player to rotate the device.
 
 ---
 
@@ -113,6 +114,7 @@ Polo-Loco/
 │   └── impressum.css               # Styles for the legal notice page
 ├── scripts/
 │   ├── shop.js                     # Shop logic (buying damage upgrades)
+│   ├── fullscreen.js               # Fullscreen mode for mobile devices
 │   ├── classes/                    # All classes (*.class.js)
 │   │   ├── drawable-object.class.js
 │   │   ├── movable-object.class.js
